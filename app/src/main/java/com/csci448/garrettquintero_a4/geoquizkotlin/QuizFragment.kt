@@ -79,6 +79,10 @@ class QuizFragment : Fragment() {
     private fun updateText() {
         question_text.text = mQuestionBank[mIndex].getQuestion()
 
+
+        /* I life these like this so that it's easier to understand whats happending versus:
+        *  previous_button.isEnabled = (mIndex != 0)
+        */
         if (mIndex == 0) { previous_button.isEnabled = false }
         else {previous_button.isEnabled = true }
 

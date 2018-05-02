@@ -40,13 +40,13 @@ class QuizFragment : Fragment() {
         false_button.setOnClickListener { checkAnswer(mQuestionBank[mIndex], false) }
 
         previous_button.setOnClickListener {
-            mIndex = ((mIndex - 1) % mQuestionBank.size)
-
+            mIndex--
+            updateText()
         }
     
         next_button.setOnClickListener {
-            mIndex = ((mIndex + 1) % mQuestionBank.size)
-
+            mIndex++
+            updateText()
         }
     }
 
@@ -64,5 +64,9 @@ class QuizFragment : Fragment() {
     fun String.toast() {
         Toast.makeText(activity, this, Toast.LENGTH_SHORT)
                 .show()
+    }
+
+    private fun updateText() {
+        question_text.text = mQuestionBank[mIndex % mQuestionBank.size].getQuestion()
     }
 }

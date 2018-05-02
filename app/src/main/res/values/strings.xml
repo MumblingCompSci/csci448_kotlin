@@ -1,0 +1,18 @@
+<resources>
+    <!-- Application -->
+    <string name="app_name">GeoQuiz.Kotlin</string>
+
+    <!-- buttons -->
+    <string name="true_button">True</string>
+    <string name="false_button">False</string>
+    <string name="prev_button">Previous</string>
+    <string name="next_button">Next</string>
+    <string name="correct_toast">Correct!</string>
+    <string name="incorrect_toast">Incorrect!</string>
+
+    <!-- Questions -->
+    <string name="question_apple">Apples are very toxic</string>
+    <string name="question_pineapple">Pineapples grow on trees</string>
+    <string name="question_garble">;alksdjfahdiabe????</string>
+
+</resources>

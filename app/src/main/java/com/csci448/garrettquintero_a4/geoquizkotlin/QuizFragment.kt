@@ -19,8 +19,8 @@ class QuizFragment : Fragment() {
 
         mQuestionBank = arrayOf(
                 Question(getString(R.string.question_apple), false),
-        Question(getString(R.string.question_pineapple), false),
-        Question(getString(R.string.question_garble), true)
+                Question(getString(R.string.question_pineapple), false),
+                Question(getString(R.string.question_garble), true)
         )
 
         /*mQuestionBank = Array<Question>(3, {
@@ -47,19 +47,25 @@ class QuizFragment : Fragment() {
         false_button.setOnClickListener { checkAnswer(false) }
 
         previous_button.setOnClickListener {
-            mIndex--
+            if (mIndex != 0) {
+                mIndex--
+            }
+            /*mIndex = abs(mIndex - 1) % mQuestionBank.size*/
             updateText()
         }
-    
+
         next_button.setOnClickListener {
-            mIndex++
+            if (mIndex != mQuestionBank.size) {
+                mIndex++
+            }
+            /*mIndex = (mIndex + 1) % mQuestionBank.size*/
             updateText()
         }
     }
 
 
     private fun checkAnswer(answer : Boolean) {
-        val question = mQuestionBank[abs(mIndex) % mQuestionBank.size]  
+        val question = mQuestionBank[mIndex]
 
         if (question.getAnswer() == answer) {
             getString(R.string.correct_toast)
@@ -70,12 +76,20 @@ class QuizFragment : Fragment() {
         }
     }
 
+    private fun updateText() {
+        question_text.text = mQuestionBank[mIndex].getQuestion()
+
+        if (mIndex == 0) { previous_button.isEnabled = false }
+        else {previous_button.isEnabled = true }
+
+        if (mIndex == (mQuestionBank.size - 1)) { next_button.isEnabled = false }
+        else { next_button.isEnabled = true }
+    }
+
     fun String.toast() {
         Toast.makeText(activity, this, Toast.LENGTH_SHORT)
                 .show()
     }
 
-    private fun updateText() {
-        question_text.text = mQuestionBank[abs(mIndex) % mQuestionBank.size].getQuestion()
-    }
+
 }

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_quiz.*
+import kotlin.math.abs
 
 class QuizFragment : Fragment() {
     private val SAVED_INDEX : String = "saved question index"
@@ -16,11 +17,17 @@ class QuizFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mQuestionBank = Array<Question>(3, {
+        mQuestionBank = arrayOf(
+                Question(getString(R.string.question_apple), false),
+        Question(getString(R.string.question_pineapple), false),
+        Question(getString(R.string.question_garble), true)
+        )
+
+        /*mQuestionBank = Array<Question>(3, {
             Question(getString(R.string.question_apple), false);
             Question(getString(R.string.question_pineapple), false);
             Question(getString(R.string.question_garble), true);
-        })
+        })*/
 
         // TODO : figure out how the fuck to get the index out of the bundle
         /*mIndex = (savedInstanceState?.getInt(SAVED_INDEX))*/
@@ -34,10 +41,10 @@ class QuizFragment : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        question_text.text = (mQuestionBank[mIndex].getQuestion())
+        updateText()
 
-        true_button.setOnClickListener { checkAnswer(mQuestionBank[mIndex], true) }
-        false_button.setOnClickListener { checkAnswer(mQuestionBank[mIndex], false) }
+        true_button.setOnClickListener { checkAnswer(true) }
+        false_button.setOnClickListener { checkAnswer(false) }
 
         previous_button.setOnClickListener {
             mIndex--
@@ -51,7 +58,9 @@ class QuizFragment : Fragment() {
     }
 
 
-    private fun checkAnswer(question : Question, answer : Boolean) {
+    private fun checkAnswer(answer : Boolean) {
+        val question = mQuestionBank[abs(mIndex) % mQuestionBank.size]  
+
         if (question.getAnswer() == answer) {
             getString(R.string.correct_toast)
                     .toast()
@@ -67,6 +76,6 @@ class QuizFragment : Fragment() {
     }
 
     private fun updateText() {
-        question_text.text = mQuestionBank[mIndex % mQuestionBank.size].getQuestion()
+        question_text.text = mQuestionBank[abs(mIndex) % mQuestionBank.size].getQuestion()
     }
 }
